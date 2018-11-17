@@ -57,9 +57,12 @@ class Planet
     texture.pushMatrix();
     
     texture.lightFalloff(0, 0.005, 0.0);
-    texture.directionalLight(255, 255, 255, lightDirection.x, lightDirection.y, lightDirection.z);
+    final float ambient = 50;
+    texture.ambientLight(ambient, ambient, ambient);
+    final float directional = 102;
+    texture.directionalLight(directional, directional, directional, lightDirection.x, lightDirection.y, lightDirection.z);
     
-    texture.fill(#ffffff);
+    texture.fill(#fafafa);
     texture.translate(pos.x, pos.y, pos.z);
     texture.sphere(size);
     
