@@ -3,29 +3,36 @@ class Planet
 {
   PVector pos;
   int size = 30;
-  Satellite st;
-  Orientation stOrient;
-  PVector nsOffset;
-  PVector offTrans;
+  Satellite st[];
+  PVector lightDirection;
   
   
   Planet()
   {
     pos = new PVector(width/2, height/2, 0.0);
-    st = new Satellite();
-    stOrient = new Orientation(new PVector(200.0, 0.0, 0.0), new Quaternion(radians(30), new PVector(0.0, 1.0, 0.0)));
-    nsOffset = new PVector(random(TAU), random(TAU), random(TAU));
-    offTrans = new PVector(0.003, 0.02, 0.001);
+    st = new Satellite[] {
+      new Satellite(),
+      new Satellite(),
+      new Satellite()
+    };
+    st[0].ori.pos.x = 100.0;
+    st[0].offset.set(0, 1, 2);
+    st[1].ori.pos.y = 200.0;
+    st[0].offset.set(4, 5, 2);
+    st[2].ori.pos.z = 150.0;
+    st[0].offset.set(0, 75, 2);
+    lightDirection = new PVector();
   }
   
   void update(float t)
   {
-    PVector noisedAxis = new PVector(cos(nsOffset.x)*2-1, sin(nsOffset.y)*2-1, sin(nsOffset.z)*2-1);
-    stOrient.rot.setAngleAxis(radians((t * 1.8)%360), noisedAxis);
-    st.pos = stOrient.rot.mult(stOrient.pos);
-    st.update(t);
+    for(int i=0; i<st.length; i++)
+    {
+      st[i].update(t);
+    }
     
-    nsOffset.add(offTrans);
+    float divedT = t/2;
+    lightDirection.set(1.0 + (noise(divedT)-.5), 1.0 + (noise(divedT+30)-.5), -1.0 + (noise(divedT-50)-.5));
   }
   
   void draw(PGraphics render)
@@ -33,13 +40,18 @@ class Planet
     render.noStroke();
     render.pushMatrix();
     
+    render.directionalLight(255, 255, 255, lightDirection.x, lightDirection.y, lightDirection.z);
+    
     render.fill(#ffffff);
     render.translate(pos.x, pos.y, pos.z);
     render.sphere(size);
     
     render.fill(#ff0000);
 //    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
-    st.draw(render);
+    for(int i=0; i<st.length; i++)
+    {
+      st[i].draw(render);
+    }
     render.popMatrix();
   }
 }
