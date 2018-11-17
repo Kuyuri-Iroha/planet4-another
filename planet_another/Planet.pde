@@ -40,6 +40,7 @@ class Planet
     render.noStroke();
     render.pushMatrix();
     
+    render.lightFalloff(0, 0.005, 0.0);
     render.directionalLight(255, 255, 255, lightDirection.x, lightDirection.y, lightDirection.z);
     
     render.fill(#ffffff);

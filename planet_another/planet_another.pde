@@ -22,19 +22,24 @@ void setup()
 
 void draw()
 {
-  float t = float(frameCount)/50;
-  render.beginDraw();
-  render.background(#0f0f0f);
-  cam.update();
-  planet.update(t);
-  render.beginCamera();
-  cam.cam(render);
-  render.endCamera();
-  planet.draw(render);
-  render.endDraw();
+  background(0);
+  for(int i=0; i<10; i++)
+  {
+    float t = float(frameCount)/50 + float(i)/20;
+    
+    render.beginDraw();
+    render.background(#0f0f0f);
+    cam.update();
+    planet.update(t);
+    render.beginCamera();
+    cam.cam(render);
+    render.endCamera();
+    planet.draw(render);
+    render.endDraw();
   
-  fsShader.set("size", width, height);
-  fsShader.set("rendered", render);
-  fsShader.set("m", 1.0);
-  filter(fsShader);
+    fsShader.set("size", width, height);
+    fsShader.set("rendered", render);
+    fsShader.set("m", sin(PI*i/10)*0.2);
+    filter(fsShader);
+  }
 }
