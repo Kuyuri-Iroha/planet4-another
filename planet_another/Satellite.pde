@@ -18,9 +18,9 @@ class Satellite
   void update(float t)
   {
     float divedT = -t;
-    euler.x += noise(divedT + offset.x) / 10.0;
-    euler.y += noise(divedT + offset.y) / 10.0;
-    euler.z += noise(divedT + offset.z) / 10.0;
+    euler.x += noise(divedT + offset.x) / 100.0;
+    euler.y += noise(divedT + offset.y) / 100.0;
+    euler.z += noise(divedT + offset.z) / 100.0;
     pos = ori.pos;
   }
   

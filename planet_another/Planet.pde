@@ -5,7 +5,9 @@ class Planet
   int size = 30;
   Satellite st[];
   PVector lightDirection;
-  
+  PGraphics texture;
+  PGraphics horiBlur;
+  PGraphics vertBlur;
   
   Planet()
   {
@@ -22,6 +24,10 @@ class Planet
     st[2].ori.pos.z = 150.0;
     st[0].offset.set(0, 75, 2);
     lightDirection = new PVector();
+
+    texture = createGraphics(width, height, P3D);
+    horiBlur = createGraphics(width, height, P3D);
+    vertBlur = createGraphics(width, height, P3D);
   }
   
   void update(float t)
@@ -37,21 +43,26 @@ class Planet
   
   void draw(PGraphics render)
   {
-    render.noStroke();
-    render.pushMatrix();
+    texture.beginDraw();
     
-    render.directionalLight(255, 255, 255, lightDirection.x, lightDirection.y, lightDirection.z);
+    texture.noStroke();
+    texture.pushMatrix();
     
-    render.fill(#ffffff);
-    render.translate(pos.x, pos.y, pos.z);
-    render.sphere(size);
+    texture.lightFalloff(0, 0.005, 0.0);
+    texture.directionalLight(255, 255, 255, lightDirection.x, lightDirection.y, lightDirection.z);
     
-    render.fill(#ff0000);
-//    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
+    texture.fill(#ffffff);
+    texture.translate(pos.x, pos.y, pos.z);
+    texture.sphere(size);
+    
     for(int i=0; i<st.length; i++)
     {
-      st[i].draw(render);
+      st[i].draw(texture);
     }
-    render.popMatrix();
+    texture.popMatrix();
+    
+    texture.endDraw();
+    
+    render.image(texture, 0, 0);
   }
 }
