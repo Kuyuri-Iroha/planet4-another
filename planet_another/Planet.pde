@@ -22,7 +22,7 @@ class Planet
   {
     PVector noisedAxis = new PVector(cos(nsOffset.x)*2-1, sin(nsOffset.y)*2-1, sin(nsOffset.z)*2-1);
     stOrient.rot.setAngleAxis(radians((frameCount * 1.8)%360), noisedAxis);
-    st.pos = stOrient.pos;
+    st.pos = stOrient.rot.mult(stOrient.pos);
     st.update();
     
     nsOffset.add(offTrans);
