@@ -19,7 +19,7 @@ class Planet
   
   void update()
   {
-    PVector noisedAxis = new PVector(noise(nsOffset.x, nsOffset.y)*2-1, noise(nsOffset.y, nsOffset.z)*2-1, noise(nsOffset.z, nsOffset.x)*2-1);
+    PVector noisedAxis = new PVector(noise(nsOffset.x)*2-1, noise(nsOffset.y)*2-1, noise(nsOffset.z)*2-1);
     stOrient.rot.setAngleAxis(radians((frameCount * 1.8)%360), noisedAxis);
     st.pos = stOrient.rot.mult(stOrient.pos);
     st.update();
