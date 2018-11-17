@@ -8,6 +8,9 @@ class Planet
   PGraphics texture;
   PGraphics horiBlur;
   PGraphics vertBlur;
+  PShader gaussianShader;
+  PGraphics blur;
+  PShader addShader;
   
   Planet()
   {
@@ -28,6 +31,9 @@ class Planet
     texture = createGraphics(width, height, P3D);
     horiBlur = createGraphics(width, height, P3D);
     vertBlur = createGraphics(width, height, P3D);
+    gaussianShader = loadShader("gaussian.glsl");
+    blur = createGraphics(width, height, P3D);
+    addShader = loadShader("add.glsl");
   }
   
   void update(float t)
@@ -44,6 +50,8 @@ class Planet
   void draw(PGraphics render)
   {
     texture.beginDraw();
+    
+    texture.clear();
     
     texture.noStroke();
     texture.pushMatrix();
@@ -63,6 +71,33 @@ class Planet
     
     texture.endDraw();
     
-    render.image(texture, 0, 0);
+    //Blur
+    gaussianShader.set("weight", gaussianWeight);
+    gaussianShader.set("tex", texture);
+    gaussianShader.set("horizontal", true);
+    horiBlur.beginDraw();
+    horiBlur.clear();
+    horiBlur.filter(gaussianShader);
+    horiBlur.endDraw();
+    gaussianShader.set("horizontal", false);
+    vertBlur.beginDraw();
+    vertBlur.clear();
+    vertBlur.filter(gaussianShader);
+    vertBlur.endDraw();
+    
+    addShader.set("origin", 0.5);
+    addShader.set("add", 0.5);
+    addShader.set("texOrigin", horiBlur);
+    addShader.set("texAdd", vertBlur);
+    blur.beginDraw();
+    blur.clear();
+    blur.filter(addShader);
+    blur.endDraw();
+    
+    addShader.set("origin", 1.0);
+    addShader.set("add", 1.0);
+    addShader.set("texOrigin", texture);
+    addShader.set("texAdd", blur);
+    render.filter(addShader);
   }
 }
