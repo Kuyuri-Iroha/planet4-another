@@ -18,14 +18,17 @@ class Planet
     st = new Satellite[] {
       new Satellite(),
       new Satellite(),
+      new Satellite(),
       new Satellite()
     };
     st[0].ori.pos.x = 100.0;
     st[0].offset.set(0, 1, 2);
     st[1].ori.pos.y = 200.0;
-    st[0].offset.set(4, 5, 2);
+    st[1].offset.set(4, 5, 2);
     st[2].ori.pos.z = 150.0;
-    st[0].offset.set(0, 75, 2);
+    st[2].offset.set(0, 75, 2);
+    st[3].ori.pos.z = -150.0;
+    st[3].offset.set(-10, 25, 3);
     lightDirection = new PVector();
 
     texture = createGraphics(width, height, P3D);

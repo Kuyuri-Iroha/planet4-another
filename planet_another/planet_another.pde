@@ -48,7 +48,7 @@ void draw()
     float t = float(frameCount)/50 + float(i)/20;
     
     render.beginDraw();
-    render.background(#000000);
+    render.background(#0f0f0f);
     cam.update();
     planet.update(t);
     render.beginCamera();
@@ -61,5 +61,9 @@ void draw()
     blurShader.set("m", sin(PI*i/10)*0.2);
     filter(blurShader);
   }
-//  saveFrame("capture/####.png"); //<>//
+  saveFrame("capture/####.png"); //<>//
+  if(400 < frameCount)
+  {
+    exit();
+  }
 }
