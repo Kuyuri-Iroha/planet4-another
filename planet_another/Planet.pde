@@ -5,6 +5,8 @@ class Planet
   int size = 30;
   Satellite st;
   Orientation stOrient;
+  PVector nsOffset;
+  float offTrans = 0.003;
   
   
   Planet()
@@ -12,11 +14,18 @@ class Planet
     pos = new PVector(width/2, height/2, 0.0);
     st = new Satellite();
     stOrient = new Orientation(new PVector(200.0, 0.0, 0.0), new Quaternion(radians(30), new PVector(0.0, 1.0, 0.0)));
+    nsOffset = new PVector(random(500), random(500), random(500));
   }
   
   void update()
   {
+    PVector noisedAxis = new PVector(noise(nsOffset.x, nsOffset.y)*2-1, noise(nsOffset.y, nsOffset.z)*2-1, noise(nsOffset.z, nsOffset.x)*2-1);
+    stOrient.rot.setAngleAxis(radians((frameCount * 1.8)%360), noisedAxis);
+    st.pos = stOrient.rot.mult(stOrient.pos);
     st.update();
+    
+    
+    nsOffset.add(new PVector(offTrans, offTrans, offTrans));
   }
   
   void draw()
@@ -29,10 +38,7 @@ class Planet
     sphere(size);
     
     fill(#ff0000);
-    stOrient.rot.setAngleAxis(radians((frameCount * 2)%360), new PVector(0.0, 0.0, 1.0));
-    PVector tmpPos = stOrient.rot.mult(stOrient.pos);
-    translate(tmpPos.x, tmpPos.y, tmpPos.z);
-    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
+//    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
     st.draw();
     popMatrix();
   }
