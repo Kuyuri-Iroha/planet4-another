@@ -18,28 +18,28 @@ class Planet
     offTrans = new PVector(0.003, 0.02, 0.001);
   }
   
-  void update()
+  void update(float t)
   {
     PVector noisedAxis = new PVector(cos(nsOffset.x)*2-1, sin(nsOffset.y)*2-1, sin(nsOffset.z)*2-1);
-    stOrient.rot.setAngleAxis(radians((frameCount * 1.8)%360), noisedAxis);
+    stOrient.rot.setAngleAxis(radians((t * 1.8)%360), noisedAxis);
     st.pos = stOrient.rot.mult(stOrient.pos);
-    st.update();
+    st.update(t);
     
     nsOffset.add(offTrans);
   }
   
-  void draw()
+  void draw(PGraphics render)
   {
-    noStroke();
-    pushMatrix();
+    render.noStroke();
+    render.pushMatrix();
     
-    fill(#ffffff);
-    translate(pos.x, pos.y, pos.z);
-    sphere(size);
+    render.fill(#ffffff);
+    render.translate(pos.x, pos.y, pos.z);
+    render.sphere(size);
     
-    fill(#ff0000);
+    render.fill(#ff0000);
 //    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
-    st.draw();
-    popMatrix();
+    st.draw(render);
+    render.popMatrix();
   }
 }

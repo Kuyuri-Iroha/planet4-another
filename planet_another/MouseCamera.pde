@@ -34,19 +34,9 @@ class MouseCamera
     prevMouse.set(mouseX, mouseY);
   }
   
-  void begin()
+  void cam(PGraphics render)
   {
-    beginCamera();
-  }
-  
-  void end()
-  {
-    endCamera();
-  }
-  
-  void cam()
-  {
-    camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z);
+    render.camera(eye.x, eye.y, eye.z, center.x, center.y, center.z, up.x, up.y, up.z);
   }
   
   void set(PVector _eye, PVector _center, PVector _up)

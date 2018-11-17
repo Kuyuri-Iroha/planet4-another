@@ -9,14 +9,14 @@ class Satellite
     pos = new PVector();
   }
   
-  void update()
+  void update(float t)
   {
   }
   
-  void draw()
+  void draw(PGraphics render)
   {
-    translate(pos.x, pos.y, pos.z);
-    sphere(size);
+    render.translate(pos.x, pos.y, pos.z);
+    render.sphere(size);
   }
   
 }
