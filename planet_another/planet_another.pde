@@ -7,7 +7,7 @@
 MouseCamera cam;
 Planet planet;
 PGraphics render;
-PShader fsShader;
+PShader blurShader;
 
 void setup()
 {
@@ -16,7 +16,8 @@ void setup()
   planet = new Planet();
   cam = new MouseCamera();
   render = createGraphics(width, height, P3D);
-  fsShader = loadShader("fs.glsl");
+  blurShader = loadShader("blur.glsl");
+  smooth(32);
 }
 
 
@@ -37,9 +38,9 @@ void draw()
     planet.draw(render);
     render.endDraw();
   
-    fsShader.set("size", width, height);
-    fsShader.set("rendered", render);
-    fsShader.set("m", sin(PI*i/10)*0.2);
-    filter(fsShader);
+    blurShader.set("rendered", render);
+    blurShader.set("m", sin(PI*i/10)*0.2);
+    filter(blurShader);
   }
+//  saveFrame("capture/####.png"); //<>//
 }

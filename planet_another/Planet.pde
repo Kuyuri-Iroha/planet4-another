@@ -47,8 +47,6 @@ class Planet
     render.translate(pos.x, pos.y, pos.z);
     render.sphere(size);
     
-    render.fill(#ff0000);
-//    println("("+tmpPos.x + ", " + tmpPos.y + ", " + tmpPos.z + ")");
     for(int i=0; i<st.length; i++)
     {
       st[i].draw(render);
