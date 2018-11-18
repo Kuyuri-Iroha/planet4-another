@@ -1,4 +1,4 @@
-// Planet_Another
+// Planet_Another //<>//
 //
 // Kuyuri Iroha
 // 2018
@@ -10,6 +10,24 @@ PGraphics render;
 PShader blurShader;
 float gauss = 50.0;
 float[] gaussianWeight = new float[10];
+
+PVector rotateVectorFromEuler(PVector source, float x, float y, float z)
+{
+  // z -> x -> z Euler
+  float[][] rot = new float[][] {
+    {cos(z)*cos(x) - sin(z)*cos(y)*sin(x), cos(z)*sin(x) + sin(z)*cos(y)*cos(x), sin(z)*sin(y)},
+    {-sin(z)*cos(x) - cos(z)*cos(y)*sin(x), -sin(z)*sin(x) + cos(z)*cos(y)*cos(x), cos(z)*sin(y)},
+    {sin(y)*sin(x), -sin(y)*cos(x), cos(y)}
+  };
+  PMatrix3D mat = new PMatrix3D(
+    rot[0][0], rot[0][1], rot[0][2], 0.0,
+    rot[1][0], rot[1][1], rot[1][2], 0.0,
+    rot[2][0], rot[2][1], rot[2][2], 0.0,
+    0.0,       0.0,       0.0,       1.0
+  );
+    
+  return mat.mult(source, null);
+}
 
 void setup()
 {
@@ -48,7 +66,7 @@ void draw()
     float t = float(frameCount)/50 + float(i)/20;
     
     render.beginDraw();
-    render.background(#0f0f0f);
+    render.background(0);
     cam.update();
     planet.update(t);
     render.beginCamera();

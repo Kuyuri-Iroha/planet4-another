@@ -99,7 +99,7 @@ public class Quaternion {
   
   /* ================= Additional Method======================= */
   
-  public void identify()
+  public void identity()
   {
     set(0.0, 0.0, 0.0, 1.0);
   }

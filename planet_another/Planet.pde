@@ -65,7 +65,7 @@ class Planet
     final float directional = 102;
     texture.directionalLight(directional, directional, directional, lightDirection.x, lightDirection.y, lightDirection.z);
     
-    texture.fill(#fafafa);
+    texture.fill(#E23C38);
     texture.translate(pos.x, pos.y, pos.z);
     texture.sphere(size);
     
@@ -105,5 +105,4 @@ class Planet
     addShader.set("texOrigin", texture);
     addShader.set("texAdd", blur);
     render.filter(addShader);
-  }
-}
+  };}
