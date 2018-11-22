@@ -79,9 +79,11 @@ void draw()
     blurShader.set("m", sin(PI*i/10)*0.2);
     filter(blurShader);
   }
+  /*
   saveFrame("capture/####.png"); //<>//
   if(400 < frameCount)
   {
     exit();
   }
+  */
 }
