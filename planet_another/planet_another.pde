@@ -1,4 +1,4 @@
-// Planet_Another //<>//
+// Planet_Another
 //
 // Kuyuri Iroha
 // 2018
@@ -27,6 +27,12 @@ PVector rotateVectorFromEuler(PVector source, float x, float y, float z)
   );
     
   return mat.mult(source, null);
+}
+
+float smoothstep(float p1, float p2, float t)
+{
+  float f = min(1.0, max(0.0, (t-p1)/(p2-p1)));
+  return f * f * (3.0 - 2.0 * f);
 }
 
 void setup()
@@ -63,7 +69,7 @@ void draw()
   clear();
   for(int i=0; i<10; i++)
   {
-    float t = float(frameCount)/50 + float(i)/20;
+    float t = float(frameCount%400)/50 + float(i)/1000.0;
     
     render.beginDraw();
     render.background(0);
@@ -79,6 +85,7 @@ void draw()
     blurShader.set("m", sin(PI*i/10)*0.2);
     filter(blurShader);
   }
+  
   /*
   saveFrame("capture/####.png"); //<>//
   if(400 < frameCount)

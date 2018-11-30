@@ -46,8 +46,7 @@ class Planet
       st[i].update(t);
     }
     
-    float divedT = t/2;
-    lightDirection.set(1.0 + (noise(divedT)-.5), 1.0 + (noise(divedT+30)-.5), -1.0 + (noise(divedT-50)-.5));
+    lightDirection.set(1.0, 1.0, -1.0);
   }
   
   void draw(PGraphics render)
