@@ -19,7 +19,7 @@ void setup()
   cam = new MouseCamera();
   render = createGraphics(width, height, P3D);
   blurShader = loadShader("blur.glsl");
-  smooth(32);
+  smooth(16);
 
   // Gaussian Weight
   float t = 0.0;
