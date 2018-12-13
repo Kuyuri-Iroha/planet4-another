@@ -18,14 +18,17 @@ class Planet
     st = new Satellite[] {
       new Satellite(),
       new Satellite(),
+      new Satellite(),
       new Satellite()
     };
     st[0].ori.pos.x = 100.0;
     st[0].offset.set(0, 1, 2);
     st[1].ori.pos.y = 200.0;
-    st[0].offset.set(4, 5, 2);
+    st[1].offset.set(4, 5, 2);
     st[2].ori.pos.z = 150.0;
-    st[0].offset.set(0, 75, 2);
+    st[2].offset.set(0, 75, 2);
+    st[3].ori.pos.z = -150.0;
+    st[3].offset.set(-10, 25, 3);
     lightDirection = new PVector();
 
     texture = createGraphics(width, height, P3D);
@@ -43,8 +46,7 @@ class Planet
       st[i].update(t);
     }
     
-    float divedT = t/2;
-    lightDirection.set(1.0 + (noise(divedT)-.5), 1.0 + (noise(divedT+30)-.5), -1.0 + (noise(divedT-50)-.5));
+    lightDirection.set(1.0, 1.0, -1.0);
   }
   
   void draw(PGraphics render)
@@ -62,7 +64,7 @@ class Planet
     final float directional = 102;
     texture.directionalLight(directional, directional, directional, lightDirection.x, lightDirection.y, lightDirection.z);
     
-    texture.fill(#fafafa);
+    texture.fill(#E23C38);
     texture.translate(pos.x, pos.y, pos.z);
     texture.sphere(size);
     
@@ -102,5 +104,4 @@ class Planet
     addShader.set("texOrigin", texture);
     addShader.set("texAdd", blur);
     render.filter(addShader);
-  }
-}
+  };}
